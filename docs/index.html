@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Computational Physics Playground</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --panel2: #1c2128;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --ok: #3fb950;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.65;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 48px 24px 96px; }
+
+  header { border-bottom: 1px solid var(--border); padding-bottom: 32px; margin-bottom: 40px; }
+  h1 { font-size: 2.1rem; margin: 0 0 12px; letter-spacing: -0.02em; }
+  .sub { color: var(--muted); font-size: 1.02rem; margin: 0 0 20px; max-width: 62ch; }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    font-family: var(--mono); font-size: 0.72rem; padding: 4px 9px;
+    border: 1px solid var(--border); border-radius: 5px; color: var(--muted);
+  }
+
+  h2 { font-size: 1.15rem; margin: 48px 0 16px; letter-spacing: -0.01em; }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 24px; margin-bottom: 20px;
+  }
+  .card h3 { margin: 0 0 6px; font-size: 1.06rem; }
+  .num {
+    font-family: var(--mono); font-size: 0.75rem; color: var(--bg);
+    background: var(--accent); padding: 2px 7px; border-radius: 4px;
+    margin-right: 10px; font-weight: 600;
+  }
+  .claim { color: var(--muted); margin: 12px 0 0; }
+
+  figure { margin: 20px 0 0; }
+  figure img { width: 100%; border-radius: 7px; border: 1px solid var(--border); display: block; }
+  figcaption { color: var(--muted); font-size: 0.84rem; margin-top: 8px; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.9rem; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  td.mono, th.mono { font-family: var(--mono); font-size: 0.84rem; }
+  tr.pass td:last-child { color: var(--ok); font-weight: 600; }
+
+  .eq {
+    background: var(--panel2); border-left: 2px solid var(--accent);
+    padding: 12px 16px; margin: 16px 0; font-family: var(--mono);
+    font-size: 0.86rem; overflow-x: auto; color: #c9d1d9;
+  }
+
+  .btn {
+    display: inline-block; font-family: var(--mono); font-size: 0.83rem;
+    padding: 9px 16px; border-radius: 6px; text-decoration: none;
+    background: var(--accent); color: #07131f; font-weight: 600; margin-top: 4px;
+  }
+  .btn.ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); margin-left: 8px; }
+  .btn:hover { opacity: 0.88; }
+
+  .next { color: var(--muted); font-size: 0.9rem; }
+  footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Computational Physics Playground</h1>
+  <p class="sub">
+    Numerical projects across vector calculus, differential equations, linear algebra,
+    numerical methods, classical mechanics, statistical mechanics, and astrophysics.
+    Each project states a physical claim, implements the governing equations, and
+    verifies the result numerically against theory.
+  </p>
+  <div class="badges">
+    <span class="badge">numpy</span>
+    <span class="badge">scipy</span>
+    <span class="badge">matplotlib</span>
+    <span class="badge">sympy</span>
+    <span class="badge">FFT</span>
+  </div>
+</header>
+
+<h2>Project 01 &mdash; Vector Fields and Potential Flow</h2>
+
+<div class="card">
+  <h3><span class="num">01</span>Stream function and Helmholtz decomposition</h3>
+  <p class="claim">
+    A field built as <strong>F = curl(&psi; z&#770;)</strong> is divergence free
+    identically; a field with nonzero divergence admits no stream function; and any
+    periodic field splits uniquely into an irrotational and a divergence free piece.
+  </p>
+
+  <figure>
+    <img src="figures/01_stream_function_field.png"
+         alt="Three panels: streamlines of a field built from a stream function, its divergence map which is uniformly near zero, and its curl map which is large.">
+    <figcaption>
+      Left: streamlines of F = curl(&psi; z&#770;). Centre: its divergence, at the
+      10<sup>&minus;13</sup> level. Right: its vorticity, which is large &mdash; divergence
+      free does not mean curl free.
+    </figcaption>
+  </figure>
+
+  <h3 style="margin-top:28px; font-size:0.95rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.04em;">Results</h3>
+  <table>
+    <thead>
+      <tr><th>Claim under test</th><th class="mono">Measured</th><th class="mono">Theory</th><th>Verdict</th></tr>
+    </thead>
+    <tbody>
+      <tr class="pass"><td>Stream function field is divergence free</td><td class="mono">4.1&times;10<sup>&minus;13</sup> relative</td><td class="mono">0 (exact)</td><td>confirmed</td></tr>
+      <tr class="pass"><td>Numerical curl equals &minus;&nabla;&sup2;&psi;</td><td class="mono">order 2.00</td><td class="mono">O(h&sup2;)</td><td>confirmed</td></tr>
+      <tr class="pass"><td>No stream function for a compressible field</td><td class="mono">0.99 relative divergence</td><td class="mono">&ne; 0</td><td>confirmed</td></tr>
+      <tr class="pass"><td>Helmholtz reconstruction of the field</td><td class="mono">5.5&times;10<sup>&minus;16</sup> relative</td><td class="mono">0</td><td>confirmed</td></tr>
+      <tr class="pass"><td>Each piece satisfies its defining condition</td><td class="mono">2.4&times;10<sup>&minus;4</sup></td><td class="mono">0</td><td>confirmed</td></tr>
+    </tbody>
+  </table>
+
+  <div class="eq">
+    &#968;&#968;&middot;F = curl(&psi; z&#770;) = (&#8706;&#8339;&psi;, &minus;&#8706;&#8337;&psi;)<br>
+    &#969;<sub>z</sub> = &#8706;&times;F = &minus;&nabla;&sup2;&psi;<br>
+    &#966;<770; = &minus;i(k<sub>x</sub>F&#770;<sub>x</sub> + k<sub>y</sub>F&#770;<sub>y</sub>)/k&sup2;
+    &nbsp;&nbsp;&nbsp;
+    &#968;<770; = &nbsp;i(k<sub>x</sub>F&#770;<sub>y</sub> &minus; k<sub>y</sub>F&#770;<sub>x</sub>)/k&sup2;
+  </div>
+
+  <figure>
+    <img src="figures/02_field_without_stream_function.png"
+         alt="Two panels: streamlines of a field with radial infall, and its divergence map which is large everywhere.">
+    <figcaption>
+      Adding radial infall supplies the divergence that a swirl alone lacks, and the
+      stream function representation fails.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="figures/03_helmholtz_decomposition.png"
+         alt="Four panels showing the original field, its irrotational part, its divergence free part, and a residual that is numerically zero.">
+    <figcaption>
+      Helmholtz decomposition. The residual panel is uniformly zero to machine
+      precision &mdash; and finding the sign error that made it 1.2 required this check.
+    </figcaption>
+  </figure>
+
+  <div style="margin-top:24px">
+    <a class="btn" href="01-vector-fields.html">Open the notebook</a>
+    <a class="btn ghost" href="https://github.com/SakshamSinghSachan/computational-physics-playground">Source</a>
+  </div>
+</div>
+
+<h2>Method notes</h2>
+<div class="card">
+  <p style="margin-top:0">
+    Two bugs produced confident, wrong output and are documented in the notebook
+    because both are easy to repeat.
+  </p>
+  <p>
+    <strong>A wrong sign in the irrotational piece.</strong> The potentials
+    <code>&#966;</code> and <code>&#968;</code> were correct, but the reconstruction used
+    <code>&minus;&nabla;&phi;</code> instead of <code>+&nabla;&phi;</code>. Every per-component
+    check still passed; only the reconstruction residual exposed it, at 1.2 &mdash; larger
+    than the field itself.
+  </p>
+  <p style="margin-bottom:0">
+    <strong>An analytic reference that was wrong.</strong> Differentiating
+    sin&thinsp;x&thinsp;e<sup>&minus;0.3y&sup2;</sup> as though the first factor were
+    x gives the wrong Laplacian. The error was constant under refinement, which is
+    the signature of a bad reference rather than a bad scheme &mdash; and a convergence
+    table that refuses to move is what catches it.
+  </p>
+</div>
+
+<h2>Planned</h2>
+<div class="card">
+  <p class="next" style="margin-top:0; margin-bottom:0">
+    02 ODE phase portraits &middot; 03 rank-1 SVD blackbody extraction &middot;
+    04 numerical convergence suite &middot; 05 residue theorem integrals &middot;
+    06 Poisson solver by finite differences &middot; 07 two-body orbits &middot;
+    08 hydrogen by finite differences &middot; 09 Ising Metropolis &middot;
+    10 blackbody explorer &middot; 11 Lane-Emden polytropes &middot;
+    12 exoplanet radial velocity detection
+  </p>
+</div>
+
+<footer>
+  Notebooks are executed and committed with outputs.
+  Every number quoted on this page is produced by the code, not typed by hand.
+</footer>
+
+</div>
+</body>
+</html>

@@ -6,6 +6,9 @@ venv/
 .env
 .vscode/ipch/
 *.png
+# Generated figures and site images are part of the deliverable, so keep them.
 !assets/*.png
+!projects/*/figures/*.png
+!docs/figures/*.png
 .DS_Store
 Thumbs.db
